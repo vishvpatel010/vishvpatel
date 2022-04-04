@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'dbcon.php';
 if(isset($_SESSION['status']))
 {
 	echo $_SESSION['status'];
@@ -9,7 +10,13 @@ if(isset($_SESSION['status']))
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Vishv Patel</title>
+	<title>
+		<?php
+			$result = mysqli_query($connect,"SELECT *FROM `web_heading` WHERE `id` = '1'");
+			$row = mysqli_fetch_array($result);
+			echo $row['title'];
+		?>
+	</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	
@@ -26,8 +33,8 @@ if(isset($_SESSION['status']))
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/style.css">
 
+	
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 	<link rel="icon" type="image/x-icon" href="images/favicon.ico">
 </head>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -59,10 +66,16 @@ if(isset($_SESSION['status']))
 				<div class="overlay"></div>
 				<div class="container-fluid px-md-0">
 					<div class="row d-md-flex no-gutters slider-text align-items-end justify-content-end" data-scrollax-parent="true">
-						<div class="one-third order-md-last img" style="background-image:url(images/vishv.png);">
+					<?php
+								$result1 = mysqli_query($connect,"SELECT *FROM `header` WHERE `id` = '1'");
+								while($row1 = mysqli_fetch_array($result1))
+								{
+							?>
+						<div class="one-third order-md-last img" style="background-image:url(data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row1['bg_photo']); ?>);">
 							<div class="overlay"></div>
 							<div class="overlay-1"></div>
 						</div>
+						<?php } ?>
 						<div class="one-forth d-flex  align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
 							<div class="text">
 								<span class="subheading">Hello! I am Vishv Patel</span>
@@ -97,51 +110,24 @@ if(isset($_SESSION['status']))
 
 	<section class="ftco-counter img bg-light" id="section-counter">
 		<div class="container">
-			<div class="row">
+			<div class="row justify-content-center">
+			<?php
+				$result2 = mysqli_query($connect, "SELECT *FROM `counter`");
+				while($row2 = mysqli_fetch_array($result2))
+				{
+			?>
 				<div class="col-md-3 justify-content-center counter-wrap ftco-animate">
 					<div class="block-18 d-flex">
 						<div class="icon d-flex justify-content-center align-items-center">
-							<span class="fa fa-thumbs-o-up"></span>
+							<span class="<?php echo $row2['icon']; ?>"></span>
 						</div>
 						<div class="text">
-							<strong class="number">1</strong>
-							<span>Project Complete</span>
+							<strong class="number"><?php echo $row2['number']; ?></strong>
+							<span><?php echo $row2['title']; ?></span>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-3 justify-content-center counter-wrap ftco-animate">
-					<div class="block-18 d-flex">
-						<div class="icon d-flex justify-content-center align-items-center">
-							<span class="fa fa-desktop"></span>
-						</div>
-						<div class="text">
-							<strong class="number">1+</strong>
-							<span>Years Experience</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 justify-content-center counter-wrap ftco-animate">
-					<div class="block-18 d-flex">
-						<div class="icon d-flex justify-content-center align-items-center">
-							<span class="fa-regular fa-user"></span>
-						</div>
-						<div class="text">
-							<strong class="number">1</strong>
-							<span>Happy Cutomer</span>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-3 justify-content-center counter-wrap ftco-animate">
-					<div class="block-18 d-flex">
-						<div class="icon d-flex justify-content-center align-items-center">
-							<span class="fa-solid fa-trophy"></span>
-						</div>
-						<div class="text">
-							<strong class="number">2+</strong>
-							<span>Awards Won</span>
-						</div>
-					</div>
-				</div>
+				<?php  } ?>
 			</div>
 		</div>
 	</section>
@@ -152,7 +138,12 @@ if(isset($_SESSION['status']))
 				<div class="col-md-6 col-lg-5 d-flex">
 					<div class="img-about img d-flex align-items-stretch">
 						<div class="overlay"></div>
-						<div class="img d-flex align-self-stretch align-items-center" style="background-image:url(images/vishv_pr.png);">
+						<?php
+							$result3 = mysqli_query($connect, "SELECT *FROM `about_me` WHERE `id` = '1'");
+							while($row3 = mysqli_fetch_array($result3))
+							{
+						?>
+						<div class="img d-flex align-self-stretch align-items-center" style="background-image:url(data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row3['image']); ?>);">
 						</div>
 					</div>
 				</div>
@@ -162,43 +153,36 @@ if(isset($_SESSION['status']))
 							<div class="col-md-12 heading-section ftco-animate">
 								<span class="subheading">My Intro</span>
 								<h2 class="mb-4" style="font-size: 34px; text-transform: capitalize;">About Me</h2>
-								<p>Im Web developer with robust problem-solving skills and proven experience in creating and designing software in a test-driven environment.</p>
-
+								<p><?php echo $row3['intro']; } ?></p>
+								<?php
+									$result4 = mysqli_query($connect, "SELECT *FROM `about` WHERE `id` = '1'");
+									while($row4 = mysqli_fetch_array($result4))
+									{
+								?>
 								<ul class="about-info mt-4 px-md-0 px-2">
-									<li class="d-flex"><span>Name:</span> <span>Vishv Patel</span></li>
-									<li class="d-flex"><span>Date of birth:</span> <span>February 28, 2004</span></li>
-									<li class="d-flex"><span>Address:</span> <span>Surat, India</span></li>
+									<li class="d-flex"><span>Name:</span> <span><?php echo $row4['name']; ?></span></li>
+									<li class="d-flex"><span>Date of birth:</span> <span><?php echo $row4['dob']; ?></span></li>
+									<li class="d-flex"><span>Address:</span> <span><?php echo $row4['address']; ?></span></li>
 									<!-- <li class="d-flex"><span>Zip code:</span> <span>1000</span></li> -->
-									<li class="d-flex"><span>Email:</span> <span><a href="mailto:vishvpatel010@gmail.com">vishvpatel010@gmail.com</a></span></li>
-									<li class="d-flex"><span>Phone: </span> <span><a href="tel:+918866001904">+91 88660 01904</a></span></li>
+									<li class="d-flex"><span>Email:</span> <span><a href="mailto:<?php echo $row4['email']; ?>"><?php echo $row4['email']; ?></a></span></li>
+									<li class="d-flex"><span>Phone: </span> <span><a href="tel:+91<?php echo $row4['phone']; ?>">+91 <?php echo $row4['phone']; ?></a></span></li>
 								</ul>
+								<?php } ?>
 							</div>
 							<div class="col-md-12">
 								<div class="my-interest d-lg-flex w-100">
+								<?php
+									$result4 = mysqli_query($connect, "SELECT *FROM `about_me_interest`");
+									while($row4 = mysqli_fetch_array($result4))
+									{
+								?>
 									<div class="interest-wrap d-flex align-items-center">
 										<div class="icon d-flex align-items-center justify-content-center">
-											<span class="flaticon-listening"></span>
+											<span class="<?php echo $row4['icon']; ?>"></span>
 										</div>
-										<div class="text">Music</div>
+										<div class="text"><?php echo $row4['title']; ?></div>
 									</div>
-									<div class="interest-wrap d-flex align-items-center">
-										<div class="icon d-flex align-items-center justify-content-center">
-											<span class="flaticon-suitcases"></span>
-										</div>
-										<div class="text">Travel</div>
-									</div>
-									<div class="interest-wrap d-flex align-items-center">
-										<div class="icon d-flex align-items-center justify-content-center">
-											<span class="flaticon-video-player"></span>
-										</div>
-										<div class="text">Movie</div>
-									</div>
-									<div class="interest-wrap d-flex align-items-center">
-										<div class="icon d-flex align-items-center justify-content-center">
-											<span class="flaticon-football"></span>
-										</div>
-										<div class="text">Gameing</div>
-									</div>
+									<?php  } ?>
 								</div>
 							</div>
 						</div>
@@ -217,13 +201,18 @@ if(isset($_SESSION['status']))
 					<!-- <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p> -->
 				</div>
 			</div>
-			<div class="row progress-circle mb-5">
+			<div class="row progress-circle mb-5 justify-content-center">
+			<?php
+				$result5 = mysqli_query($connect, "SELECT *FROM `skill`");
+				while($row5 = mysqli_fetch_array($result5))
+				{
+			?>
 				<div class="col-lg-4 mb-4">
 					<div class="bg-white rounded-lg shadow p-4">
-						<h2 class="h5 font-weight-bold text-center mb-4">HTML</h2>
+						<h2 class="h5 font-weight-bold text-center mb-4"><?php echo $row5['title']; ?></h2>
 
 						<!-- Progress bar 1 -->
-						<div class="progress mx-auto" data-value='95'>
+						<div class="progress mx-auto" data-value='<?php echo $row5['per']; ?>'>
 							<span class="progress-left">
 								<span class="progress-bar border-primary"></span>
 							</span>
@@ -231,107 +220,14 @@ if(isset($_SESSION['status']))
 								<span class="progress-bar border-primary"></span>
 							</span>
 							<div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-								<div class="h2 font-weight-bold">95<sup class="small">%</sup></div>
+								<div class="h2 font-weight-bold"><?php echo $row5['per']; ?><sup class="small">%</sup></div>
 							</div>
 						</div>
 						<!-- END -->
 					</div>
 				</div>
-				<div class="col-lg-4 mb-4">
-					<div class="bg-white rounded-lg shadow p-4">
-						<h2 class="h5 font-weight-bold text-center mb-4">CSS</h2>
-
-						<!-- Progress bar 1 -->
-						<div class="progress mx-auto" data-value='80'>
-							<span class="progress-left">
-								<span class="progress-bar border-primary"></span>
-							</span>
-							<span class="progress-right">
-								<span class="progress-bar border-primary"></span>
-							</span>
-							<div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-								<div class="h2 font-weight-bold">80<sup class="small">%</sup></div>
-							</div>
-						</div>
-						<!-- END -->
-					</div>
-				</div>
-				<div class="col-lg-4 mb-4">
-					<div class="bg-white rounded-lg shadow p-4">
-						<h2 class="h5 font-weight-bold text-center mb-4">WordPress</h2>
-
-						<!-- Progress bar 1 -->
-						<div class="progress mx-auto" data-value='65'>
-							<span class="progress-left">
-								<span class="progress-bar border-primary"></span>
-							</span>
-							<span class="progress-right">
-								<span class="progress-bar border-primary"></span>
-							</span>
-							<div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-								<div class="h2 font-weight-bold">65<sup class="small">%</sup></div>
-							</div>
-						</div>
-						<!-- END -->
-					</div>
-				</div>
-				<div class="col-lg-4 mb-4">
-					<div class="bg-white rounded-lg shadow p-4">
-						<h2 class="h5 font-weight-bold text-center mb-4">JavaScript</h2>
-
-						<!-- Progress bar 1 -->
-						<div class="progress mx-auto" data-value='55'>
-							<span class="progress-left">
-								<span class="progress-bar border-primary"></span>
-							</span>
-							<span class="progress-right">
-								<span class="progress-bar border-primary"></span>
-							</span>
-							<div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-								<div class="h2 font-weight-bold">55<sup class="small">%</sup></div>
-							</div>
-						</div>
-						<!-- END -->
-					</div>
-				</div>
-				<div class="col-lg-4 mb-4">
-					<div class="bg-white rounded-lg shadow p-4">
-						<h2 class="h5 font-weight-bold text-center mb-4">PHP</h2>
-
-						<!-- Progress bar 1 -->
-						<div class="progress mx-auto" data-value='95'>
-							<span class="progress-left">
-								<span class="progress-bar border-primary"></span>
-							</span>
-							<span class="progress-right">
-								<span class="progress-bar border-primary"></span>
-							</span>
-							<div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-								<div class="h2 font-weight-bold">95<sup class="small">%</sup></div>
-							</div>
-						</div>
-						<!-- END -->
-					</div>
-				</div>
-				<div class="col-lg-4 mb-4">
-					<div class="bg-white rounded-lg shadow p-4">
-						<h2 class="h5 font-weight-bold text-center mb-4">CSS</h2>
-
-						<!-- Progress bar 1 -->
-						<div class="progress mx-auto" data-value='95'>
-							<span class="progress-left">
-								<span class="progress-bar border-primary"></span>
-							</span>
-							<span class="progress-right">
-								<span class="progress-bar border-primary"></span>
-							</span>
-							<div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-								<div class="h2 font-weight-bold">95<sup class="small">%</sup></div>
-							</div>
-						</div>
-						<!-- END -->
-					</div>
-				</div>
+				<?php } ?>
+				
 				
 			</div>
 		</div>
@@ -348,33 +244,21 @@ if(isset($_SESSION['status']))
 			</div>
 
 			<div class="row">
+				<?php
+				$result6 = mysqli_query($connect, "SELECT *FROM `service`");
+				while($row6 = mysqli_fetch_array($result6))
+				{
+				?>
 				<div class="col-md-6 col-lg-4">
 					<div class="media block-6 services d-block bg-white rounded-lg shadow ftco-animate">
-						<div class="icon d-flex align-items-center justify-content-center"><span class="flaticon-3d-design"></span></div>
+						<div class="icon d-flex align-items-center justify-content-center"><span class="<?php echo $row6['icon']; ?>"></span></div>
 						<div class="media-body">
-							<h3 class="heading mb-3">Web Design</h3>
-							<p>Web design encompasses many different skills and disciplines in the production and maintenance of websites.</p>
+							<h3 class="heading mb-3"><?php echo $row6['title']; ?></h3>
+							<p><?php echo $row6['intro']; ?></p>
 						</div>
 					</div> 
 				</div>
-				<div class="col-md-6 col-lg-4">
-					<div class="media block-6 services d-block bg-white rounded-lg shadow ftco-animate">
-						<div class="icon shadow d-flex align-items-center justify-content-center"><span class="fa-brands fa-php"></span></div>
-						<div class="media-body">
-							<h3 class="heading mb-3">PHP - Web Application</h3>
-							<p>PHP is a general purpose server side scripting language that we can use to develop dynamic web sites and applications.</p>
-						</div>
-					</div> 
-				</div>
-				<div class="col-md-6 col-lg-4">
-					<div class="media block-6 services d-block bg-white rounded-lg shadow ftco-animate">
-						<div class="icon shadow d-flex align-items-center justify-content-center"><span class="flaticon-web-programming"></span></div>
-						<div class="media-body">
-							<h3 class="heading mb-3">Web Development</h3>
-							<p>Web development is the process of coding a website to create the intended design using programming languages.</p>
-						</div>
-					</div> 
-				</div>
+					<?php } ?>
 			</div>
 
 		</div>
@@ -407,15 +291,21 @@ if(isset($_SESSION['status']))
 				</div>
 			</div>
 			<div class="row justify-content-center">
+				<?php
+					$result7 = mysqli_query($connect, "SELECT *FROM `project`");
+					while($row7 = mysqli_fetch_array($result7))
+					{
+				?>
 				<div class="col-md-3">
-					<div class="project img shadow ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(images/project_1.png);">
+					<div class="project img shadow ftco-animate d-flex justify-content-center align-items-center" style="background-image: url(data:image/jpg;charset=utf8;base64,<?php echo base64_encode($row7['image']); ?>);">
 						<div class="overlay"></div>
 						<div class="text text-center p-4">
-							<h3><a href="#">RationOnDemand</a></h3>
-							<span>Web Design</span>
+							<h3><a href="<?php echo $row7['link']; ?>" target="_BLANK"><?php echo $row7['title']; ?></a></h3>
+							<span><?php echo $row7['technology']; ?></span>
 						</div>
 					</div>
 				</div>
+<?php } ?>
 			</div>
 		</div>
 	</section>
@@ -627,28 +517,34 @@ if(isset($_SESSION['status']))
 					<div class="row">
 						<div class="dbox w-100 d-flex">
 							<div class="icon d-flex align-items-center justify-content-center">
-								<span class="fa fa-map-marker"></span>
+								<span class="fa-solid fa-location-dot"></span>
 							</div>
+							<?php
+								$result8 = mysqli_query($connect, "SELECT *FROM `about` WHERE `id` = '1'");
+								while($row8 = mysqli_fetch_array($result8))
+								{
+							?>
 							<div class="text">
-								<p><span>Address:</span> Surat, India</p>
+								<p><span>Address:</span> <?php echo $row8['address']; ?></p>
 							</div>
 						</div>
 						<div class="dbox w-100 d-flex">
 							<div class="icon d-flex align-items-center justify-content-center">
-								<span class="fa fa-phone"></span>
+								<span class="fa-solid fa-phone"></span>
 							</div>
 							<div class="text">
-								<p><span>Phone:</span> <a href="tel:+918866001904">+91 88660 01904</a></p>
+								<p><span>Phone:</span> <a href="tel:+91<?php echo $row8['phone']; ?>">+91 <?php echo $row8['phone']; ?></a></p>
 							</div>
 						</div>
 						<div class="dbox w-100 d-flex">
 							<div class="icon d-flex align-items-center justify-content-center">
-								<span class="fa fa-paper-plane"></span>
+								<span class="fa-solid fa-paper-plane"></span>
 							</div>
 							<div class="text">
-								<p><span>Email:</span> <a href="mailto:vishvpatel010@gmail.com">vishvpatel010@gmail.com</a></p>
+								<p><span>Email:</span> <a href="mailto:<?php echo $row8['email']; ?>"><?php echo $row8['email']; ?></a></p>
 							</div>
 						</div>
+						<?php }?>
 						<!-- <div class="dbox w-100 d-flex">
 							<div class="icon d-flex align-items-center justify-content-center">
 								<span class="fa fa-globe"></span>
@@ -671,7 +567,11 @@ if(isset($_SESSION['status']))
 				<div class="col-md-6">
 					<div class="ftco-footer-widget mb-4">
 						<h2 class="ftco-heading-2">Lets talk about</h2>
-						<p>Im Web developer with robust problem-solving skills and proven experience in creating and designing software in a test-driven environment.</p>
+						<p><?php
+							$result9 = mysqli_query($connect, "SELECT *FROM `about_me` WHERE `id` = '1'");
+							$row9 = mysqli_fetch_array($result9);
+								echo $row9['intro'];
+						?></p>
 						<!-- <p><a href="#" class="btn btn-primary">Learn more</a></p> -->
 					</div>
 				</div>
@@ -691,11 +591,17 @@ if(isset($_SESSION['status']))
 					<div class="ftco-footer-widget mb-4">
 						<h2 class="ftco-heading-2">Have a Questions?</h2>
 						<div class="block-23 mb-3">
+						<?php
+								$result10 = mysqli_query($connect, "SELECT *FROM `about` WHERE `id` = '1'");
+								while($row10 = mysqli_fetch_array($result10))
+								{
+							?>
 							<ul>
-								<li><span class="icon fa fa-map marker"></span><span class="text">Surat, India</span></li>
-								<li><a href="tel:+918866001904"><span class="icon fa fa-phone"></span><span class="text">+91 88660 01904</span></a></li>
-								<li><a href="mailto:vishvpatel010@gmail.com"><span class="icon fa fa-paper-plane pr-4"></span><span class="text">vishvpatel010@gmail.com</span></a></li>
+								<li><span class="icon fa-solid fa-location-dot"></span><span class="text"> <?php echo $row10['address']; ?></span></li>
+								<li><a href="tel:+91<?php echo $row10['phone']; ?>"><span class="icon fa-solid fa-phone"></span><span class="text">+91 <?php echo $row10['phone']; ?></span></a></li>
+								<li><a href="mailto:<?php echo $row10['email']; ?>"><span class="icon fa-solid fa-paper-plane"></span><span class="text"><?php echo $row10['email']; ?></span></a></li>
 							</ul>
+							<?php } ?>
 						</div>
 					</div>
 				</div>
@@ -704,11 +610,13 @@ if(isset($_SESSION['status']))
 						<h2 class="ftco-heading-2">Follow Me</h2>
 						<p>Let us be social</p>
 						<ul class="ftco-footer-social list-unstyled mt-2">
-							<li class="ftco-animate"><a href="https://www.linkedin.com/in/vishvpatel010" target="_BLANK"><span class="fa-brands fa-linkedin-in"></span></a></li>
-							<li class="ftco-animate"><a href="https://github.com/vishvpatel010" target="_BLANK"><span class="fa-brands fa-github"></span></a></li>
-							<li class="ftco-animate"><a href="https://twitter.com/vishvpatel010" target="_BLANK"><span class="fa-brands fa-twitter"></span></a></li>
-							<li class="ftco-animate"><a href="https://www.facebook.com/vishvpatel010" target="_BLANK"><span class="fa-brands fa-facebook"></span></a></li>
-							<li class="ftco-animate"><a href="https://www.instagram.com/vishvpatel/" target="_BLANK"><span class="fa-brands fa-instagram"></span></a></li>
+						<?php
+                          $result11 = mysqli_query($connect, "SELECT *FROM `social`");
+                          while($row11 = mysqli_fetch_array($result11))
+                          {
+                        ?>
+							<li class="ftco-animate"><a href="<?php echo $row11['link']; ?>" target="_BLANK"><span class="<?php echo $row11['icon']; ?>"></span></a></li>
+							<?php } ?>
 						</ul>
 					</div>
 				</div>
@@ -743,6 +651,9 @@ if(isset($_SESSION['status']))
 		<!-- <script src="js/google-map.js"></script> -->
 		
 		<script src="js/main.js"></script>
+
+		<script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+
 		
 	</body>
 	</html>
