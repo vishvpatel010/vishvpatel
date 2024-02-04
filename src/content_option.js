@@ -20,19 +20,19 @@ const dataabout = {
     aboutme: "I am a committed expert with a demonstrated history of success in 🌐 digital marketing, 💻 web development, and 🎨 design. My enthusiasm lies in formulating impactful online strategies and crafting captivating digital experiences. My objective is to facilitate the success of businesses and individuals in the digital realm. Emphasizing 🌟 quality, 🗨️ clear communication, and surpassing expectations, I am poised to transform your digital aspirations into reality. Let's collaborate and attain online success! 💡",
 };
 const worktimeline = [{
-        jobtitle: "Designer of week",
-        where: "YAdfi",
-        date: "2020",
+        jobtitle: "Ration System",
+        where: "India",
+        date: "2021",
     },
     {
-        jobtitle: "Designer of week",
-        where: "Jamalya",
-        date: "2019",
+        jobtitle: "Social App",
+        where: "India",
+        date: "2023",
     },
     {
-        jobtitle: "Designer of week",
-        where: "ALquds",
-        date: "2019",
+        jobtitle: "Real Estate",
+        where: "India",
+        date: "2023",
     },
 ];
 
@@ -91,7 +91,16 @@ const dataportfolio = [{
         description: "Get The Latest Weather Info Of Your City",
         link: "https://weather-cau6.onrender.com/",
     },
-    
+    {
+        img:"https://firebasestorage.googleapis.com/v0/b/vishvpatel-5fca7.appspot.com/o/SocialApp.png?alt=media&token=bf44386a-66ac-4a1b-aed9-934a3d7d86bf",
+        description: "Social App",
+        link: "#",
+    },
+    {
+        img:"https://firebasestorage.googleapis.com/v0/b/vishvpatel-5fca7.appspot.com/o/Ration.png?alt=media&token=b4d40873-7951-4914-a9b2-6500dfb59b88",
+        description: "Digital Ration System",
+        link: "#",
+    },
 ];
 
 const contactConfig = {
@@ -100,9 +109,9 @@ const contactConfig = {
     description: "Ready to elevate your digital footprint? Let's work together to turn your online aspirations into tangible success. Reach out today to start a conversation about how I can support you on your journey.",
     // creat an emailjs.com account 
     // check out this tutorial https://www.emailjs.com/docs/examples/reactjs/
-    YOUR_SERVICE_ID: "service_4vr3ver",
-    YOUR_TEMPLATE_ID: "template_id",
-    YOUR_USER_ID: "user_id",
+    YOUR_SERVICE_ID: "service_0d16pjj",
+    YOUR_TEMPLATE_ID: "template_cp9bluc",
+    YOUR_USER_ID: "Z5_69ejxlcQmuLhku",
 };
 
 const socialprofils = {
